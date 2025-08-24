@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4003;
 
 app.get('/products', (req, res) => {
   res.json({msg: 'List of products'});

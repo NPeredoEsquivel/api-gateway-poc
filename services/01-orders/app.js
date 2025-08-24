@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 4001;
 
 app.get('/orders/:orderId', (req, res) => {
   const { orderId } = req.params;
