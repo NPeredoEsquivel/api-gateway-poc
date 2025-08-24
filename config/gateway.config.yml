@@ -7,9 +7,27 @@ apiEndpoints:
   api:
     host: localhost
     paths: '/ip'
+  orders:
+    host: localhost
+    paths: '/orders*'
+    methods: 'GET,POST,PUT'
+  payments:
+    host: localhost
+    paths: '/payments*'
+    methods: 'GET,POST,PUT'
+  products:
+    host: localhost
+    paths: '/products*'
+    methods: 'GET,POST,PUT'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
+  ordersService:
+    url: 'http://localhost:4001'
+  paymentsService:
+    url: 'http://localhost:4002'
+  productsService:
+    url: 'http://localhost:4003'
 policies:
   - basic-auth
   - cors
@@ -29,4 +47,34 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: httpbin 
+              changeOrigin: true
+  orders:
+    apiEndpoints:
+      - orders
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: ordersService
+              changeOrigin: true
+  payments:
+    apiEndpoints:
+      - payments
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: paymentsService
+              changeOrigin: true
+  products:
+    apiEndpoints:
+      - products
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: productsService
               changeOrigin: true

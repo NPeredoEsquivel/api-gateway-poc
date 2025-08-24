@@ -1,0 +1,8 @@
+### GET Products
+GET http://localhost:8080/products
+
+### GET Payments
+GET http://localhost:8080/payments/123
+
+### GET Orders
+GET http://localhost:8080/orders
