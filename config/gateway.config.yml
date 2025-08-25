@@ -6,28 +6,28 @@ admin:
 apiEndpoints:
   api:
     host: localhost
-    paths: '/ip'
+    paths: "/ip"
   orders:
     host: localhost
-    paths: '/orders*'
-    methods: 'GET,POST,PUT'
+    paths: "/orders*"
+    methods: "GET,POST,PUT"
   payments:
     host: localhost
-    paths: '/payments*'
-    methods: 'GET,POST,PUT'
+    paths: "/payments*"
+    methods: "GET,POST,PUT"
   products:
     host: localhost
-    paths: '/products*'
-    methods: 'GET,POST,PUT'
+    paths: "/products*"
+    methods: "GET,POST,PUT"
 serviceEndpoints:
   httpbin:
-    url: 'https://httpbin.org'
+    url: "https://httpbin.org"
   ordersService:
-    url: 'http://localhost:4001'
+    url: "http://localhost:4001"
   paymentsService:
-    url: 'http://localhost:4002'
+    url: "http://localhost:4002"
   productsService:
-    url: 'http://localhost:4003'
+    url: "http://localhost:4003"
 policies:
   - basic-auth
   - cors
@@ -42,18 +42,23 @@ pipelines:
     apiEndpoints:
       - api
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: httpbin 
+              serviceEndpoint: httpbin
               changeOrigin: true
   orders:
     apiEndpoints:
       - orders
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - rate-limit:
+          - action:
+              max: 10
+              windowMs: 120000
+              rateLimitBy: "${req.ip}"
       - proxy:
           - action:
               serviceEndpoint: ordersService
@@ -62,8 +67,8 @@ pipelines:
     apiEndpoints:
       - payments
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: paymentsService
@@ -72,8 +77,8 @@ pipelines:
     apiEndpoints:
       - products
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: productsService
